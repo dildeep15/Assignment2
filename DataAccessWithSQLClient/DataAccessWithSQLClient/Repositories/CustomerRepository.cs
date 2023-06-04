@@ -108,7 +108,7 @@ namespace DataAccessWithSQLClient.Repositories
         {
             Customer customer = new Customer();
             string sql = "SELECT TOP 1 CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer" +
-                " Where FirstName LIKE @Name";
+                " Where FirstName LIKE @Name OR LastName Like @Name";
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
@@ -160,6 +160,12 @@ namespace DataAccessWithSQLClient.Repositories
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// <c>CheckNullValue</c> method check null values in database result
+        /// </summary>
+        /// <param name="reader">Reader</param>
+        /// <param name="colIndex">Column Index</param>
+        /// <returns></returns>
         private static string CheckNullValue(SqlDataReader reader, int colIndex)
         {
             if (!reader.IsDBNull(colIndex))

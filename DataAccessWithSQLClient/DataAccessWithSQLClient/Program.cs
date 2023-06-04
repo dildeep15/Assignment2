@@ -15,8 +15,7 @@ namespace DataAccessWithSQLClient
             // Get Customer by Id
            // GetCustomerById(repository,1);
 
-            GetCustomerByName(repository, "K");
-
+            GetCustomerByName(repository, "Helena");
 
         }
 
