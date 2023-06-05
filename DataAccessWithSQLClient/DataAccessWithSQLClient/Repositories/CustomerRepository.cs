@@ -21,17 +21,22 @@ namespace DataAccessWithSQLClient.Repositories
         /// <summary>
         /// <c>GetAllCustomer</c> method get list of all customers from database;
         /// </summary>
-        /// <returns></returns>
-        public List<Customer> GetAllCustomer()
+        /// <returns>IEnumerable List of Customer</returns>
+        public List<Customer> GetAllCustomer(int? OffsetLimit, int? NumberofRows)
         {
             List<Customer> customers = new List<Customer>();
-            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
+            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer " +
+                "ORDER BY CustomerId ";
             try
             {
                 // Connect
                 using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     conn.Open();
+                    // Update query if values of Offfset & number of rows is provided
+                    if (OffsetLimit.HasValue && NumberofRows.HasValue)
+                        sql += $"OFFSET {OffsetLimit} ROWS FETCH NEXT {NumberofRows} ROWS ONLY";
+
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         // Execute a command
@@ -104,6 +109,11 @@ namespace DataAccessWithSQLClient.Repositories
             return customer;
         }
 
+        /// <summary>
+        /// <c>GetCustomerByName</c> method return a customer matching name from database.
+        /// </summary>
+        /// <param name="name">Name of Customer</param>
+        /// <returns>Customer</returns>
         public Customer GetCustomerByName(string name)
         {
             Customer customer = new Customer();

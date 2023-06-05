@@ -13,7 +13,7 @@ namespace DataAccessWithSQLClient.Repositories
         /// <c>GetAllCustomer</c> method return all customers.
         /// </summary>
         /// <returns>List of customers</returns>
-        public List<Customer> GetAllCustomer();
+        public List<Customer> GetAllCustomer(int? OffsetLimit, int? NumberofRows);
         /// <summary>
         /// <c>GetCustomerById</c> return a specific customer by customerId.
         /// </summary>

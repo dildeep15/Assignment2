@@ -13,10 +13,11 @@ namespace DataAccessWithSQLClient
             //GetAllCustomers(repository);
 
             // Get Customer by Id
-           // GetCustomerById(repository,1);
+            // GetCustomerById(repository,1);
 
-            GetCustomerByName(repository, "Helena");
+            //GetCustomerByName(repository, "Helena");
 
+            GetPageOfCustomer(repository, 10, 10);
         }
 
 
@@ -27,7 +28,7 @@ namespace DataAccessWithSQLClient
         /// <param name="repository"></param>
         private static void GetAllCustomers(ICustomerRepository repository)
         {
-            PrintCustomers(repository.GetAllCustomer());
+            PrintCustomers(repository.GetAllCustomer(null, null));
         }
 
         /// <summary>
@@ -42,10 +43,13 @@ namespace DataAccessWithSQLClient
                 PrintCustomer(customer);
             else
                 Console.WriteLine("No customer found with "+customerId+" Customer ID");
-
         }
 
-
+        /// <summary>
+        /// <c>GetCustomerByName</c> method get customer by name.
+        /// </summary>
+        /// <param name="repository">Repository</param>
+        /// <param name="name">Name of customer</param>
         private static void GetCustomerByName(ICustomerRepository repository, string name)
         {
             Customer customer = repository.GetCustomerByName(name);
@@ -54,6 +58,18 @@ namespace DataAccessWithSQLClient
             else
                 Console.WriteLine("No customer found with " + name + " Name");
         }
+
+        /// <summary>
+        /// <c>GetPageOfCustomer</c> method return rows of customer by defined offset.
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="offset"></param>
+        /// <param name="rows"></param>
+        private static void GetPageOfCustomer(ICustomerRepository repository, int offset, int rows)
+        {
+            PrintCustomers(repository.GetAllCustomer(offset, rows));
+        }
+
 
         /// <summary>
         /// <c>PrintCustomers</c> method prints IEnumerable list of customers
