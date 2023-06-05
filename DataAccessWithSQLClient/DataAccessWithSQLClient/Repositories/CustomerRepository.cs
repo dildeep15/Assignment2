@@ -181,8 +181,8 @@ namespace DataAccessWithSQLClient.Repositories
         public bool UpdateCustomer(Customer customer)
         {
             bool success = false;
-            string sql = "UPDATE Customer(FirstName = @FirstName, LastName = @LastName, Country = @Country, " +
-                "PostalCode = @PostalCode, Phone = @Phone, Email = @Email)" +
+            string sql = "UPDATE Customer SET FirstName = @FirstName, LastName = @LastName, Country = @Country, " +
+                "PostalCode = @PostalCode, Phone = @Phone, Email = @Email" +
                 " WHERE CustomerId = @CustomerId";
             try
             {
