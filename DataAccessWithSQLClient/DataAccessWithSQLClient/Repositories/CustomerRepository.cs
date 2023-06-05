@@ -212,17 +212,17 @@ namespace DataAccessWithSQLClient.Repositories
             return success;
         }
 
-        public List<Customer> GetNumberOfCustomerByCountry()
+        public List<CustomerCountry> GetNumberOfCustomerByCountry()
         {
             throw new NotImplementedException();
         }
 
-        public List<Customer> HighestSpenderCustomer()
+        public List<CustomerSpender> HighestSpenderCustomer()
         {
             throw new NotImplementedException();
         }
 
-        public List<Genre> PopularGenreOfCustomer(int id)
+        public List<CustomerGenre> PopularGenreOfCustomer(int id)
         {
             throw new NotImplementedException();
         }

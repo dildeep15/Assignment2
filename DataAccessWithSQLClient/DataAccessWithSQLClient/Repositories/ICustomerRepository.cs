@@ -38,17 +38,17 @@ namespace DataAccessWithSQLClient.Repositories
         /// <c>GetCustomerByCountry</c> return customers group by country code.
         /// </summary>
         /// <returns>List of customers</returns>
-        public List<Customer> GetNumberOfCustomerByCountry();
+        public List<CustomerCountry> GetNumberOfCustomerByCountry();
         /// <summary>
         /// <c>HighestSpenderCustomer</c> return highest spender customers in descending order.
         /// </summary>
         /// <returns>List of customer</returns>
-        public List<Customer> HighestSpenderCustomer();
+        public List<CustomerSpender> HighestSpenderCustomer();
         /// <summary>
         /// <c>PopularGenreOfCustomer</c> return most popular genre for a customer.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<Genre> PopularGenreOfCustomer(int id);
+        public List<CustomerGenre> PopularGenreOfCustomer(int id);
     }
 }

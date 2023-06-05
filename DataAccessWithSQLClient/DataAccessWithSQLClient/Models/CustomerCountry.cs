@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataAccessWithSQLClient.Models
 {
-    internal class Genre
+    internal class CustomerCountry
     {
-        public int GenreId { get; set; }
-        public string Name { get; set; }
+        public string Country { get; set; }
+        public int NumberOfCustomers { get; set; }
     }
 }
