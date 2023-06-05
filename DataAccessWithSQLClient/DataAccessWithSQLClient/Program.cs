@@ -17,9 +17,23 @@ namespace DataAccessWithSQLClient
 
             //GetCustomerByName(repository, "Helena");
 
-            GetPageOfCustomer(repository, 10, 10);
-        }
+            //GetPageOfCustomer(repository, 10, 10);
 
+
+            Customer customer = new Customer()
+            {
+                CustomerId = 60,
+                FirstName = "UpdatedJohn",
+                LastName  = "Cena",
+                Country = "US",
+                PostalCode = "343 34",
+                Phone = "+23-3434343",
+                Email = "johnsmith@gmail.com"
+            };
+            //AddCustomer(repository, customer);
+            UpdateCustomer(repository, customer);
+
+        }
 
 
         /// <summary>
@@ -69,6 +83,54 @@ namespace DataAccessWithSQLClient
         {
             PrintCustomers(repository.GetAllCustomer(offset, rows));
         }
+
+        /// <summary>
+        /// <c>AddCustomer</c> method validate & insert a new customer record in database
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="customer"></param>
+        private static void AddCustomer(ICustomerRepository repository, Customer customer)
+        {
+            // Validate customer for non-null fields;
+            if(customer.FirstName.IsNullOrEmpty() || customer.LastName.IsNullOrEmpty()|| customer.Email.IsNullOrEmpty())
+                Console.WriteLine("A Customer must have valid First Name, Last Name & Email!");
+
+            else
+            {
+                // Continue with insertion
+                if(repository.AddNewCustomer(customer))
+                    Console.WriteLine($"Customer {customer.FirstName} {customer.LastName} added successfully!");
+                else
+                    Console.WriteLine("Unable to add customer to database");
+            }
+        }
+
+        /// <summary>
+        /// <c>UpdateCustomer</c> method update an existing customer in database.
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="customer"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private static void UpdateCustomer(ICustomerRepository repository, Customer customer)
+        {
+            // Validate primary key for table
+            if (customer.CustomerId == 0)
+                Console.WriteLine("Can not update customer information without CustomerId");
+
+            // Validate customer for non-null fields;
+            else if (customer.FirstName.IsNullOrEmpty() || customer.LastName.IsNullOrEmpty() || customer.Email.IsNullOrEmpty())
+                Console.WriteLine("A Customer must have valid First Name, Last Name & Email!");
+
+            else
+            {
+                // Continue with insertion
+                if (repository.UpdateCustomer(customer))
+                    Console.WriteLine($"Customer {customer.FirstName} {customer.LastName} updated successfully!");
+                else
+                    Console.WriteLine("Unable to update customer in database");
+            }
+        }
+
 
 
         /// <summary>

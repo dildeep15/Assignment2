@@ -3,6 +3,7 @@ using DataAccessWithSQLClient.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -15,7 +16,34 @@ namespace DataAccessWithSQLClient.Repositories
     {
         public bool AddNewCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            bool success = false;
+            string sql = "INSERT INTO Customer(FirstName, LastName, Country, PostalCode, Phone, Email)" +
+                " VALUES(@FirstName, @LastName, @Country, @PostalCode, @Phone, @Email)";
+            try
+            {
+                using ( SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
+                {
+                    conn.Open();
+                    using ( SqlCommand cmd = new SqlCommand( sql, conn))
+                    {
+                        // Update values in query string
+                        cmd.Parameters.AddWithValue("@FirstName", customer.FirstName);
+                        cmd.Parameters.AddWithValue("@LastName", customer.LastName);
+                        cmd.Parameters.AddWithValue("@Country", string.IsNullOrEmpty(customer.Country) ? DBNull.Value : customer.Country);
+                        cmd.Parameters.AddWithValue("@PostalCode", string.IsNullOrEmpty(customer.PostalCode) ? DBNull.Value : customer.PostalCode);
+                        cmd.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty( customer.Phone) ? DBNull.Value : customer.Phone);
+                        cmd.Parameters.AddWithValue("@Email", customer.Email);
+                        // Execute non-query
+                        success = cmd.ExecuteNonQuery() > 0 ? true : false;
+                    }
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return success;
         }
 
         /// <summary>
@@ -150,6 +178,40 @@ namespace DataAccessWithSQLClient.Repositories
             return customer;
         }
 
+        public bool UpdateCustomer(Customer customer)
+        {
+            bool success = false;
+            string sql = "UPDATE Customer(FirstName = @FirstName, LastName = @LastName, Country = @Country, " +
+                "PostalCode = @PostalCode, Phone = @Phone, Email = @Email)" +
+                " WHERE CustomerId = @CustomerId";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        // Update values in query string
+                        cmd.Parameters.AddWithValue("@FirstName", customer.FirstName);
+                        cmd.Parameters.AddWithValue("@LastName", customer.LastName);
+                        cmd.Parameters.AddWithValue("@Country", string.IsNullOrEmpty(customer.Country) ? DBNull.Value : customer.Country);
+                        cmd.Parameters.AddWithValue("@PostalCode", string.IsNullOrEmpty(customer.PostalCode) ? DBNull.Value : customer.PostalCode);
+                        cmd.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(customer.Phone) ? DBNull.Value : customer.Phone);
+                        cmd.Parameters.AddWithValue("@Email", customer.Email);
+                        cmd.Parameters.AddWithValue("@CustomerId", customer.CustomerId);
+                        // Execute non-query
+                        success = cmd.ExecuteNonQuery() > 0 ? true : false;
+                    }
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return success;
+        }
+
         public List<Customer> GetNumberOfCustomerByCountry()
         {
             throw new NotImplementedException();
@@ -161,11 +223,6 @@ namespace DataAccessWithSQLClient.Repositories
         }
 
         public List<Genre> PopularGenreOfCustomer(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }
