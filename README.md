@@ -1,6 +1,3 @@
-# Noroff  Assignment2
-Sql database scripts &amp; a c# console application with data access using sqlclient
-
 <div align="center">
     <h1>Assignment2</h1>
 </div>
@@ -20,7 +17,6 @@ This assignment is divided in two appendix
 >09_deleteAssistant.sql: Delete data from Assistant table.
 
 ## Appendix B: A C# console application with SQL Client library to interact with the database(Chinook)
-
 >The application allows you to create different types of Heroes. For example Mage, Ranger, Rogue or Warrior.
 >A Hero can be created just with a name.
 >Each hero can equip various armor and weapons and are displayed under hero equipments. Each hero has a valid armor types and valid armor types that it can equip.
@@ -33,7 +29,6 @@ This assignment is divided in two appendix
 >Program class with main function.
 
 ## Usage:
-
 ```
 // Create object of CustomerRepository class
 ICustomerRepository repository = new CustomerRepository();
@@ -88,9 +83,9 @@ GetHighestSpender(repository);
 // Get popular genre of customer depending on invoiced tracks 
 customerId = 12;
 GetCustomerPopularGenre(repository, customerId);
+```
 
 ## Technologies
-
 Project is created with:
 * .Net6
 * C#
