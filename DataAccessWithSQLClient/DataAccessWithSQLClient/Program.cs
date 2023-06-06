@@ -9,21 +9,28 @@ namespace DataAccessWithSQLClient
     {
         static void Main(string[] args)
         {
+            // Create object of CustomerRepository class
             ICustomerRepository repository = new CustomerRepository();
+
             // Display all customers
-            //GetAllCustomers(repository);
+            GetAllCustomers(repository);
 
-            // Get Customer by Id
-            // GetCustomerById(repository,1);
+            // Get Customer by Id 
+            int customerId = 1;
+            GetCustomerById(repository, customerId);
 
-            //GetCustomerByName(repository, "Helena");
+            // Get Customer By Name
+            string name = "Helena";
+            GetCustomerByName(repository, name);
 
-            //GetPageOfCustomer(repository, 10, 10);
+            // Get Customer with offset & number of rows
+            int offset = 10;
+            int numberOfRows = 10;
+            GetPageOfCustomer(repository, offset, numberOfRows);
 
-
+            // Add a new Customer
             Customer customer = new Customer()
             {
-                CustomerId = 60,
                 FirstName = "UpdatedJohn",
                 LastName  = "Cena",
                 Country = "US",
@@ -31,15 +38,30 @@ namespace DataAccessWithSQLClient
                 Phone = "+23-3434343",
                 Email = "johnsmith@gmail.com"
             };
-            //AddCustomer(repository, customer);
-            //UpdateCustomer(repository, customer);
+            AddCustomer(repository, customer);
 
-            //GetCustomersPerCountry(repository);
+            //Update an existing Customer
+            Customer update = new Customer()
+            {
+                CustomerId = 60,
+                FirstName = "UpdatedJohn",
+                LastName = "Cena",
+                Country = "US",
+                PostalCode = "343 34",
+                Phone = "+23-3434343",
+                Email = "johnsmith@gmail.com"
+            };
+            UpdateCustomer(repository, update);
 
-            //GetHighestSpender(repository);
+            // Get numbers of customer per Country
+            GetCustomersPerCountry(repository);
 
-            GetCustomerPopularGenre(repository,12);
+            // Get customer with highest invoice amount
+            GetHighestSpender(repository);
 
+            // Get popular genre of customer depending on invoiced tracks 
+            customerId = 12;
+            GetCustomerPopularGenre(repository, customerId);
         }
 
 
@@ -223,10 +245,6 @@ namespace DataAccessWithSQLClient
             {
                 // Assign first Genre.
                 string popularGenre = customerGenres[0].Name;
-                foreach (CustomerGenre cg in customerGenres)
-                {
-                    Console.WriteLine("cg.total tracks:"+ cg.totalTracks);
-                }
                 for (int i = 1; i < customerGenres.Count(); i++)
                 {
                     // Check if there is tie up in popular genre
