@@ -6,27 +6,23 @@
 
 This assignment is divided in two appendix
 ## Appendix A: Multiple database scripts in SQL Scripts folder
->01_dbCreate.sql: Create the SuperheroesDb database.
->02_tableCreate.sql: Create Superhero, Assistant and Power tables.
->03_relationshipSuperheroAssistant.sql: Alter & define relationship between Superhero & Assistant tables.
->04_relationshipSuperheroPower.sql: Alter & define relationship between Superhero & Power tables.
->05_insertSuperheroes.sql: Insert data into Superhero table.
->06_insertAssistants.sql: Insert data into Assitant table.
->07_powers.sql: Insert data into Power table.
->08_updateSuperhero.sql: Update Superhero table.
->09_deleteAssistant.sql: Delete data from Assistant table.
+> 01_dbCreate.sql: Create the SuperheroesDb database.
+> 02_tableCreate.sql: Create Superhero, Assistant and Power tables.
+> 03_relationshipSuperheroAssistant.sql: Alter & define relationship between Superhero & Assistant tables.
+> 04_relationshipSuperheroPower.sql: Alter & define relationship between Superhero & Power tables.
+> 05_insertSuperheroes.sql: Insert data into Superhero table.
+> 06_insertAssistants.sql: Insert data into Assitant table.
+> 07_powers.sql: Insert data into Power table.
+> 08_updateSuperhero.sql: Update Superhero table.
+> 09_deleteAssistant.sql: Delete data from Assistant table.
 
 ## Appendix B: A C# console application with SQL Client library to interact with the database(Chinook)
->The application allows you to create different types of Heroes. For example Mage, Ranger, Rogue or Warrior.
->A Hero can be created just with a name.
->Each hero can equip various armor and weapons and are displayed under hero equipments. Each hero has a valid armor types and valid armor types that it can equip.
->All character types have their own attributes, which is a combination of **stregnth, Dexterity  & intelligence**.
->Every hero start at level 1 and on level up attributes of hero gets different attributes gain.
+This part of Assignment deals with manipulating SQL Server data in Visual Studio using SQL Client library in RepositoryPattern.
 
 ## General info and usage
->The console application has 5 datamodels in Models folder: Customer, CustomerCountry, CustomerGenre, CustomerSpender and Invoice.
->The application has 3 repositories: ConnectionStringHelper, ICustomerRepository(Interface), CustomerRepository.
->Program class with main function.
+> The console application has 5 datamodels in Models folder: Customer, CustomerCountry, CustomerGenre, CustomerSpender and Invoice.
+> The application has 3 repositories: ConnectionStringHelper, ICustomerRepository(Interface), CustomerRepository.
+> Program class with main function.
 
 ## Usage:
 ```
