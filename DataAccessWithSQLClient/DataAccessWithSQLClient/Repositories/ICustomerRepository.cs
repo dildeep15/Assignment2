@@ -14,36 +14,43 @@ namespace DataAccessWithSQLClient.Repositories
         /// </summary>
         /// <returns>List of customers</returns>
         public List<Customer> GetAllCustomer(int? OffsetLimit, int? NumberofRows);
+
         /// <summary>
         /// <c>GetCustomerById</c> return a specific customer by customerId.
         /// </summary>
         /// <returns>Customer</returns>
         public Customer GetCustomerById(int id);
+
         /// <summary>
         /// <c>GetCustomerByName</c> return a specific customer by name.
         /// </summary>
         /// <returns></returns>
         public Customer GetCustomerByName(string name);
+
         /// <summary>
         /// <c>AddNewCustomer</c> add a new customer to database.
         /// </summary>
         /// <returns>Boolean true or false</returns>
         public bool AddNewCustomer(Customer customer);
+
         /// <summary>
         /// <c>UpdateCustomer</c> update a customer in database.
         /// </summary>
         /// <returns>Boolean true or false</returns>
         public bool UpdateCustomer(Customer customer);
+
         /// <summary>
         /// <c>GetCustomerByCountry</c> return customers group by country code.
         /// </summary>
         /// <returns>List of customers</returns>
         public List<CustomerCountry> GetNumberOfCustomerByCountry();
+
         /// <summary>
-        /// <c>HighestSpenderCustomer</c> return highest spender customers in descending order.
+        /// <c>HighestSpenderCustomer</c> method get list of highest spender customer in descending order
         /// </summary>
-        /// <returns>List of customer</returns>
-        public List<CustomerSpender> HighestSpenderCustomer();
+        /// <returns></returns>
+        public List<CustomerSpender> GetHighestSpenderCustomers();
+
         /// <summary>
         /// <c>PopularGenreOfCustomer</c> return most popular genre for a customer.
         /// </summary>

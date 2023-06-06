@@ -214,12 +214,67 @@ namespace DataAccessWithSQLClient.Repositories
 
         public List<CustomerCountry> GetNumberOfCustomerByCountry()
         {
-            throw new NotImplementedException();
+            List<CustomerCountry> customerCountryList = new List<CustomerCountry>();
+            string sql = "SELECT COUNT(*) AS NoOfCustomer, Country FROM Customer GROUP BY Country ORDER BY NoOfCustomer DESC;";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                CustomerCountry temp = new CustomerCountry();
+                                temp.NumberOfCustomers = reader.GetInt32(0);
+                                temp.Country = reader.GetString(1);
+                                customerCountryList.Add(temp);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return customerCountryList;
         }
 
-        public List<CustomerSpender> HighestSpenderCustomer()
+
+        public List<CustomerSpender> GetHighestSpenderCustomers()
         {
-            throw new NotImplementedException();
+            List<CustomerSpender> spenderList = new List<CustomerSpender>();
+            string sql = "SELECT C.CustomerId, SUM(I.Total) as InvoiceTotal FROM Customer C" +
+                " LEFT JOIN Invoice I ON C.CustomerId = I.CustomerId GROUP BY C.CustomerId" +
+                " ORDER BY InvoiceTotal DESC";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                CustomerSpender temp = new CustomerSpender();
+                                temp.CustomerId = reader.GetInt32(0);
+                                temp.InvoiceTotal = reader.IsDBNull(1) ? 0 : reader.GetDecimal(1) ;
+                                spenderList.Add(temp);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return spenderList;
         }
 
         public List<CustomerGenre> PopularGenreOfCustomer(int id)

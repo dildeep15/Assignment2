@@ -1,6 +1,7 @@
 ﻿using DataAccessWithSQLClient.Models;
 using DataAccessWithSQLClient.Repositories;
 using Microsoft.IdentityModel.Tokens;
+using System.Data.SqlTypes;
 
 namespace DataAccessWithSQLClient
 {
@@ -31,7 +32,11 @@ namespace DataAccessWithSQLClient
                 Email = "johnsmith@gmail.com"
             };
             //AddCustomer(repository, customer);
-            UpdateCustomer(repository, customer);
+            //UpdateCustomer(repository, customer);
+
+            //GetCustomersPerCountry(repository);
+
+            GetHighestSpender(repository);
 
         }
 
@@ -131,7 +136,69 @@ namespace DataAccessWithSQLClient
             }
         }
 
+        /// <summary>
+        /// <c>GetCustomersInCountry</c> method get numbers of customer per country
+        /// </summary>
+        /// <param name="repository"></param>
+        private static void GetCustomersPerCountry(ICustomerRepository repository)
+        {
+            PrintCustomerCountry(repository.GetNumberOfCustomerByCountry());
+        }
 
+        /// <summary>
+        /// <c>PrintCustomerCountry</c> method print IEnumerable list of customers per country
+        /// </summary>
+        /// <param name="customerCountries"></param>
+        private static void PrintCustomerCountry(IEnumerable<CustomerCountry> customerCountries)
+        {
+            if (customerCountries != null && customerCountries.Any())
+            {
+                // Print column name for data
+                Console.WriteLine("Country -- Number Of Customers");
+                // Print column for customer table
+                foreach (CustomerCountry cc in customerCountries)
+                {
+                    PrintLine(30);
+                    Console.WriteLine($"{cc.Country} -- {cc.NumberOfCustomers}");
+                }           
+            }
+            else
+            {
+                Console.WriteLine("Unable to get number of customer per country record from database");
+            }
+        }
+
+        /// <summary>
+        /// <c>GetHighestSpender</c> method get a list of customer with invoice total in descending order.
+        /// </summary>
+        /// <param name="repository"></param>
+        private static void GetHighestSpender(ICustomerRepository repository)
+        {
+            PrintHighestSpender(repository.GetHighestSpenderCustomers());
+        }
+
+        /// <summary>
+        /// <c>PrintHighestSpender</c> method prints a list of customers with invoice total in descending order to console.
+        /// </summary>
+        /// <param name="customerSpenders"></param>
+        private static void PrintHighestSpender(List<CustomerSpender> customerSpenders)
+        {
+            if (customerSpenders != null && customerSpenders.Any())
+            {
+                // Print column name for data
+                Console.WriteLine("Customer ID -- Invoice Total");
+                // Print column for customer table
+                foreach (CustomerSpender cs in customerSpenders)
+                {
+                    PrintLine(30);
+                    Console.WriteLine($"\t{cs.CustomerId} \t  {cs.InvoiceTotal}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Unable to get highest spender customers from database");
+            }
+        }
 
         /// <summary>
         /// <c>PrintCustomers</c> method prints IEnumerable list of customers

@@ -9,8 +9,6 @@ namespace DataAccessWithSQLClient.Models
     internal class CustomerSpender
     {
         public int CustomerId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public double InvoiceTotal { get; set; }
+        public decimal InvoiceTotal { get; set; }
     }
 }
