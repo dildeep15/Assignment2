@@ -277,9 +277,48 @@ namespace DataAccessWithSQLClient.Repositories
             return spenderList;
         }
 
-        public List<CustomerGenre> PopularGenreOfCustomer(int id)
+        /// <summary>
+        /// <c>PopularGenreOfCustomer</c> method get top 2 genre depending upon number of tracks related to that genre customer has buyed.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<CustomerGenre> PopularGenreOfCustomer(int customerId)
         {
-            throw new NotImplementedException();
+            List<CustomerGenre> popularGenres = new List<CustomerGenre>();
+            string sql = "SELECT TOP 2 Genre.GenreId, Genre.Name, count(InvoiceLine.TrackId) as totalTracks FROM Genre " +
+                "LEFT JOIN Track ON TRACK.GenreId = Genre.GenreId " +
+                "LEFT JOIN InvoiceLine ON InvoiceLine.TrackId = Track.TrackId " +
+                "LEFT JOIN Invoice ON Invoice.InvoiceId = InvoiceLine.InvoiceId " +
+                "Where Invoice.CustomerId = @CustomerId " +
+                "Group by Genre.GenreId, Genre.Name " +
+                "ORDER BY totalTracks DESC";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@CustomerId", customerId);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                CustomerGenre temp = new CustomerGenre();
+                                temp.GenreId = reader.GetInt32(0);
+                                temp.Name = reader.GetString(1);
+                                temp.totalTracks = reader.GetInt32(2);
+                                popularGenres.Add(temp);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return popularGenres;
         }
 
         /// <summary>

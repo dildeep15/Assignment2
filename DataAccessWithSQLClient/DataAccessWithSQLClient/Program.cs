@@ -36,7 +36,9 @@ namespace DataAccessWithSQLClient
 
             //GetCustomersPerCountry(repository);
 
-            GetHighestSpender(repository);
+            //GetHighestSpender(repository);
+
+            GetCustomerPopularGenre(repository,12);
 
         }
 
@@ -199,6 +201,46 @@ namespace DataAccessWithSQLClient
                 Console.WriteLine("Unable to get highest spender customers from database");
             }
         }
+
+
+        /// <summary>
+        /// <c>GetCustomerPopularGenre</c> method get customer popular genre & print it to console.
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="customerId"></param>
+        private static void GetCustomerPopularGenre(ICustomerRepository repository, int customerId)
+        {
+            PrintCustomerGenre(repository.PopularGenreOfCustomer(customerId));
+        }
+
+        /// <summary>
+        /// <c>PrintCustomerGenre</c> method print customer popular genre to console.
+        /// </summary>
+        /// <param name="customerGenres"></param>
+        private static void PrintCustomerGenre(List<CustomerGenre> customerGenres)
+        {
+            if (customerGenres != null && customerGenres.Any())
+            {
+                // Assign first Genre.
+                string popularGenre = customerGenres[0].Name;
+                foreach (CustomerGenre cg in customerGenres)
+                {
+                    Console.WriteLine("cg.total tracks:"+ cg.totalTracks);
+                }
+                for (int i = 1; i < customerGenres.Count(); i++)
+                {
+                    // Check if there is tie up in popular genre
+                    if (customerGenres[i-1].totalTracks == customerGenres[i].totalTracks)
+                        popularGenre +=" & "+ customerGenres[i].Name;
+                }
+                Console.WriteLine("The popular genre of customer:"+ popularGenre);
+            }
+            else
+            {
+                Console.WriteLine("The Customer has not buyed any tracks");
+            }
+        }
+
 
         /// <summary>
         /// <c>PrintCustomers</c> method prints IEnumerable list of customers
